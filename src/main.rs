@@ -14,7 +14,6 @@ const MD5_LEN: usize = 16;
 // Total header len
 const HEADER_LEN: usize = SIZE_LEN + MD5_LEN;
 
-
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
 struct Args {
@@ -46,7 +45,10 @@ fn main() -> ExitCode {
             println!("Payload size:  {}", (s + HEADER_LEN).to_string().yellow());
         }
         Err(e) => {
-            println!("Failed to read data from settings file: {}", e.to_string().red());
+            println!(
+                "Failed to read data from settings file: {}",
+                e.to_string().red()
+            );
             return ExitCode::FAILURE;
         }
     }
@@ -63,21 +65,21 @@ fn main() -> ExitCode {
     assert_eq!(bin.len(), data.len() + HEADER_LEN);
 
     match File::create(args.output) {
-        Ok(mut f) => {
-            match f.write_all(&bin) {
-                Ok(_) => println!("{}", "Data written to output file.".green()),
-                Err(e) => {
-                    println!("Failed to write data to output file: {}", e.to_string().red());
-                    return ExitCode::FAILURE;
-                }
+        Ok(mut f) => match f.write_all(&bin) {
+            Ok(_) => println!("{}", "Data written to output file.".green()),
+            Err(e) => {
+                println!(
+                    "Failed to write data to output file: {}",
+                    e.to_string().red()
+                );
+                return ExitCode::FAILURE;
             }
-        }
+        },
         Err(e) => {
             println!("Failed to create output file: {}", e.to_string().red());
             return ExitCode::FAILURE;
         }
     }
-
 
     ExitCode::SUCCESS
 }
