@@ -1,0 +1,11 @@
+[package]
+name = "inu-cfg-flash"
+version = "0.1.0"
+authors = ["Jordon Scott <jordonsc@gmail.com>"]
+edition = "2021"
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+md5 = "0.7.0"
+clap = { version = "4.5.9", features = ["derive"] }
+colored = "2.1.0"
