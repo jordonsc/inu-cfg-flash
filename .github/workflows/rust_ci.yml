@@ -33,5 +33,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           default: true
+          toolchain: stable
+          override: true
       - name: Run command
         run: cargo ${{ matrix.action.command }} ${{ matrix.action.args }}
